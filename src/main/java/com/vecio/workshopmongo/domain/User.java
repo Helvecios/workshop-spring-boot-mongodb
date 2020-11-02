@@ -2,11 +2,17 @@ package com.vecio.workshopmongo.domain;
 
 import java.io.Serializable;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+//para indicar que se trata de uma coleção do MongoDB
+@Document(collection="user")
 //para converter os objetos em bytes para transmitir pela rede
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//atributos
+	@Id
 	private String id;
 	private String name;
 	private String email;
