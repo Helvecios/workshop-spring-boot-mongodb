@@ -61,5 +61,15 @@ public class UserResouce {
 			service.delete(id); //para deletar o usuário a partir do id
 			return ResponseEntity.noContent().build(); //noContent código 204 do http
 		}
+		
+		//método para atualizar dados do usuário
+		@RequestMapping(value="/{id}", method=RequestMethod.PUT)
+		public ResponseEntity<Void> update(@RequestBody UserDTO objDTO, @PathVariable String id) {
+			User obj = service.fromDTO(objDTO); //intancia um obj a partir do objDTO
+			obj.setId(id); //para buscar o id do usuario que está sendo utualizado
+			obj = service.update(obj); //atualiza os dados no BD
+			//instanciar um obj uri para pegar o novo endereço do objeto que foi inserido
+			return ResponseEntity.noContent().build(); //noContent código 204 do http
+		}
 	
 }

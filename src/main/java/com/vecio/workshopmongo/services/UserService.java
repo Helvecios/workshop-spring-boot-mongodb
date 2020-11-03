@@ -39,7 +39,21 @@ public class UserService {
 		findById(id); //usar o método findById para procurar o id a ser deletado
 		repo.deleteById(id);
 	}
-		
+	
+	//método para atualizar um User
+	public User update(User obj) {
+		//instaciar um obj usuário que será atualizado
+		User newObj = findById(obj.getId());
+		updateData(newObj, obj); //responsável por copiar os dados do "obj" para o "newObj"
+		return repo.save(newObj);
+ }
+	
+	//método para atualizar o newObj com os dados  	
+	private void updateData(User newObj, User obj) {
+		newObj.setName(obj.getName());
+		newObj.setEmail(obj.getEmail());
+	}
+
 	//método para receber um UserDTO objDTO
 	public User fromDTO(UserDTO objDTO) {
 		return new User(objDTO.getId(), objDTO.getName(), objDTO.getEmail());
