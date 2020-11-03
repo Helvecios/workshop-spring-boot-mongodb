@@ -62,7 +62,7 @@ public class Instantiation implements CommandLineRunner{
 		postRepository.saveAll(Arrays.asList(post1, post2));
 		
 		maria.getPosts().addAll(Arrays.asList(post1, post2));
-		//salvar os Posts da maria
+		//salvar os Posts da maria no BD
 		userRepository.save(maria);
 	}
 }
