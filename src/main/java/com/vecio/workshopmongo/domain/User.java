@@ -1,8 +1,11 @@
 package com.vecio.workshopmongo.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 //para indicar que se trata de uma coleção do MongoDB
@@ -17,6 +20,10 @@ public class User implements Serializable {
 	private String name;
 	private String email;
 	
+	//atributos do Post e instanciar a lista 
+	@DBRef(lazy = true)
+	private List<Post> posts = new ArrayList<>();
+		
 	//construtor padrão
 	public User() {
 	}
@@ -53,6 +60,14 @@ public class User implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
+	}
 
 	//hashCode and equals para comparar objetos
 	@Override
@@ -79,5 +94,4 @@ public class User implements Serializable {
 			return false;
 		return true;
 	}
-	
 }
