@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -31,9 +32,13 @@ public class UserResouce {
 		//converter a lista de User para lista UserDTO
 		List<UserDTO> listDto = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList()); //usando função labda
 		return ResponseEntity.ok(listDto);
-		
 	}
 	
-	
-
+	//método findById (retornando o DTO)
+	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
+		//instanciar um obj usuário
+		User obj = service.findById(id);
+		return ResponseEntity.ok().body(new UserDTO(obj));
+	}
 }
