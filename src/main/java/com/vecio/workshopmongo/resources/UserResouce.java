@@ -55,4 +55,11 @@ public class UserResouce {
 		return ResponseEntity.created(uri).build(); //created retorna o código 201 que é o código de resposta http quando vc cria um novo recurso
 	}
 	
+	//método para deletar por id
+		@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+		public ResponseEntity<Void> delete(@PathVariable String id) {
+			service.delete(id); //para deletar o usuário a partir do id
+			return ResponseEntity.noContent().build(); //noContent código 204 do http
+		}
+	
 }
