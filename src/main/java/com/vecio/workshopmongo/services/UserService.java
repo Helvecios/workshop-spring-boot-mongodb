@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vecio.workshopmongo.domain.User;
+import com.vecio.workshopmongo.dto.UserDTO;
 import com.vecio.workshopmongo.repository.UserRepository;
 import com.vecio.workshopmongo.services.exception.ObjectNotFoundException;
 
@@ -27,4 +28,14 @@ public class UserService {
 		Optional<User> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 		}
+	
+	//método para inserir
+	public User insert(User obj) {
+		return repo.insert(obj);
+	}
+	
+	//método para receber um UserDTO objDTO
+	public User fromDTO(UserDTO objDTO) {
+		return new User(objDTO.getId(), objDTO.getName(), objDTO.getEmail());
+	}
 }

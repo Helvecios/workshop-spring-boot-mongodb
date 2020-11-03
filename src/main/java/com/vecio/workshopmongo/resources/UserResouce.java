@@ -1,14 +1,17 @@
 package com.vecio.workshopmongo.resources;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.vecio.workshopmongo.domain.User;
 import com.vecio.workshopmongo.dto.UserDTO;
@@ -41,4 +44,15 @@ public class UserResouce {
 		User obj = service.findById(id);
 		return ResponseEntity.ok().body(new UserDTO(obj));
 	}
+	
+	//método para inserir usuário
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void> insert(@RequestBody UserDTO objDTO) {
+		User obj = service.fromDTO(objDTO); //converte DTO para User
+		obj = service.insert(obj); //insere no BD
+		//instanciar um obj uri para pegar o novo endereço do objeto que foi inserido
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).build(); //created retorna o código 201 que é o código de resposta http quando vc cria um novo recurso
+	}
+	
 }
