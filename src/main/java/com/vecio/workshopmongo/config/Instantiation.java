@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import com.vecio.workshopmongo.domain.Post;
 import com.vecio.workshopmongo.domain.User;
 import com.vecio.workshopmongo.dto.AuthorDTO;
+import com.vecio.workshopmongo.dto.CommentDTO;
 import com.vecio.workshopmongo.repository.PostRepository;
 import com.vecio.workshopmongo.repository.UserRepository;
 
@@ -47,6 +48,15 @@ public class Instantiation implements CommandLineRunner{
 		//instaciar os objetos Post
 		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem", "Vou viajar para São Paulo!", new AuthorDTO(maria));
 		Post post2 = new Post(null, sdf.parse("23/03/2018"), "Bom dia!", "Acordei feliz hoje!", new AuthorDTO(maria));
+		
+		//instanciar os comentários
+		CommentDTO c1 = new CommentDTO("Boa viagem mano!", sdf.parse("21/03/2018"), new AuthorDTO(alex));
+		CommentDTO c2 = new CommentDTO("Aproveite", sdf.parse("22/03/2018"), new AuthorDTO(bob));
+		CommentDTO c3 = new CommentDTO("Tenha um ótimo dia!", sdf.parse("23/03/2018"), new AuthorDTO(alex));
+		
+		//salvar os objetos na coleção de comentários
+		post1.getComments().addAll(Arrays.asList(c1, c2));
+		post2.getComments().addAll(Arrays.asList(c3));
 		
 		//salvar os objetos na coleção de Post
 		postRepository.saveAll(Arrays.asList(post1, post2));
