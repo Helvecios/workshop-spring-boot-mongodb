@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.vecio.workshopmongo.domain.Post;
 import com.vecio.workshopmongo.domain.User;
 import com.vecio.workshopmongo.dto.UserDTO;
 import com.vecio.workshopmongo.services.UserService;
@@ -72,4 +73,11 @@ public class UserResouce {
 			return ResponseEntity.noContent().build(); //noContent código 204 do http
 		}
 	
+		//método para retornar os Posts de um usuário
+		@RequestMapping(value="/{id}/posts", method=RequestMethod.GET)
+		public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+			//instanciar um obj usuário
+			User obj = service.findById(id);
+			return ResponseEntity.ok().body(obj.getPosts());
+		}
 }
