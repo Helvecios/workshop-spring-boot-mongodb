@@ -1,5 +1,6 @@
 package com.vecio.workshopmongo.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -18,5 +19,8 @@ public interface PostRepository extends MongoRepository<Post, String> {
 	//método para realizar busca pelo título
 	//List<Post> findByTitleContainingIgnoreCase(String text); //IgnoreCase para não fazer distinção entre maiúsculo e minúscula
 	
+	//método de consulta com vários critérios
+	@Query("{ $and: [ {date: {$gte: ?1} }, {date: {$lte: ?2}}, {$or: [ { 'title': { $regex: ?0, $options: 'i' } }, { 'doby': { $regex: ?0, $options: 'i' } }, { 'comments.text': { $regex: ?0, $options: 'i' } } ] } ] }")
+	List<Post> fullSearch(String text, Date minDate, Date maxDate);
 
 }
